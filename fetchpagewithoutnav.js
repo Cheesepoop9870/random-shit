@@ -1,5 +1,5 @@
 const targetUrl = 'https://example.com'; // Replace with your URL
-const originUrl = targetUrl.match(/https?:\/\/(www\.)?.+\.[^\/?#]{3}/g)[0]; //gets origin
+const originUrl = targetUrl.match(/https?:\/\/(www\.)?.+\.[^\/?#]{3}/g)[0];
 
 console.log(originUrl)
 function loadPage(url) {
@@ -30,7 +30,7 @@ function replaceEverything(newDoc, url) {
     document.body.appendChild(range.createContextualFragment(newDoc.body.innerHTML));
 
     const videos = document.querySelectorAll('video');
-    videos.forEach(video => { //fix videos
+    videos.forEach(video => {
     // Essential: Tell the browser to look at the src/source tags again
         video.load(); 
 
@@ -51,7 +51,7 @@ function replaceEverything(newDoc, url) {
     // 2. Select all scripts
     const scripts = Array.from(document.querySelectorAll('script'));
 
-    scripts.forEach(oldScript => { // fix scripts
+   scripts.forEach(oldScript => {
     const newScript = document.createElement('script');
 
     // 1. Copy all attributes exactly
@@ -80,7 +80,18 @@ function replaceEverything(newDoc, url) {
 
     
     // Update the URL in the browser bar without reloading
-    window.history.pushState({}, '', url);
+    window.history.pushState({}, '', '/');
+
+    var link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+    }
+    
+    link.href = 'https://commons.wikimedia.org/favicon.ico';
+
+    
 }
 console.log(document)
 // 1. Hijack all link clicks
@@ -99,3 +110,4 @@ window.onpopstate = () => loadPage(window.location.href);
 
 // Initial load
 loadPage(targetUrl);
+
