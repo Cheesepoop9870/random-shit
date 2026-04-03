@@ -80,7 +80,7 @@ function replaceEverything(newDoc, url) {
 
     
     // Update the URL in the browser bar without reloading
-    window.history.pushState({}, '', '/');
+    window.history.pushState({}, '', url);
 
     var link = document.querySelector("link[rel~='icon']");
     if (!link) {
